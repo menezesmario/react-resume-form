@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-const SUPPORTED_FORMATS = ["application/pdf", "application/doc", "application/docx", "application/txt"];
+// const SUPPORTED_FORMATS = [];
 
 const schema = yup.object().shape({
   name: yup.string().required("O campo nome é obrigatório"),
@@ -14,8 +14,7 @@ const schema = yup.object().shape({
   .test("fileSize", "O arquivo deve ter no máximo 500kb", (value) => {
     return value && value[0].size <= 500000
   })
-  .test("fileType", "Arquivos suportados: .pdf, .doc, .docx ou txt", value => SUPPORTED_FORMATS.includes(value.type))
-  ,
+  .test("fileType", "Arquivos suportados: .pdf, .doc, .docx ou txt", (value) => ["application/pdf", "application/doc", "application/docx", "application/txt"]),
 
 });
 
@@ -33,26 +32,26 @@ export default function App() {
         <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow-md rounded px-8 py-8 pt-8">
           <label>Nome</label>
           <input type="text" name="candidate_name" {...register("name")} className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full" />
-          <p>{errors.name?.message}</p>
-
+          <small>{errors.name?.message}</small>
+          <br/>
           <label>Email</label>  
           <input type="email" name="email" {...register("email")} className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-          <p>{errors.email?.message}</p>
-
+          <small>{errors.email?.message}</small>
+          <br/>
           <label>Telefone</label>  
           <input type="number" name="phone" {...register("phone")} className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-          <p>{errors.phone?.message}</p>
-
+          <small>{errors.phone?.message}</small>
+          <br/>
           <label>Endereço</label>  
           <input type="text" name="address" {...register("address")} className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-          <p>{errors.address?.message}</p>
-
+          <small>{errors.address?.message}</small>
+          <br/>
           <label>Currículo</label>  
           <input ref={register} type="file" name="curriculum" {...register("curriculum")} className="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm border-0 shadow outline-none focus:outline-none focus:ring w-full"/>
-          <p>{errors.curriculum?.message}</p>
-          
-          <input type="submit" />
-          
+          <small>{errors.curriculum?.message}</small>
+          <br/>
+          <input type="submit" style={{backgroundColor: "blue", color: "white", padding: "10px", borderRadius: "4px", width: "100%", cursor: "pointer"}}/>
+          {/* <button type="submit" className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"> Enviar </button>          */}
         </form>
       </div>
     </section>
